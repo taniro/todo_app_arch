@@ -33,7 +33,7 @@ class TodoViewModel extends ChangeNotifier {
   Future<Result<void>> _addTodo(String text) async {
     try {
       await _repository.addTodo(text);
-      return Ok(null);
+      return Ok(text);
     } catch (e) {
       return Error("Falha ao adicionar");
     } finally {

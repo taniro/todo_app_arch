@@ -1,7 +1,7 @@
 class TodoService {
   TodoService();
 
-  var todos = ['Estudar Flutter', 'Fazer exercícios', 'Ler documentação'];
+  List<String>  todos = [];
 
   Future<List<String>> fetchTodos() async {
     // Simula uma chamada de API
