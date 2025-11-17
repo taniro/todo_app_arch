@@ -1,24 +1,43 @@
 import 'package:flutter/foundation.dart';
 import 'package:todo_app_arch/data/repositories/TodoRepository.dart';
+import 'package:todo_app_arch/utils/command.dart';
+import 'package:todo_app_arch/utils/result.dart';
+
 
 class TodoViewModel extends ChangeNotifier {
+  TodoViewModel(this._repository) {
+    loadTodos = Command<List<String>, void>(_loadTodos)..executeNoArgs();
+    addTodo = Command<void, String>(_addTodo);
+  }
+
   final TodoRepository _repository;
 
-  TodoViewModel(this._repository);
+  late Command<List<String>, void> loadTodos;
+  late Command<void, String> addTodo;
 
   List<String> _todos = [];
-  bool _isLoading = false;
-
   List<String> get todos => _todos;
-  bool get isLoading => _isLoading;
 
-  Future<void> loadTodos() async {
-    _isLoading = true;
-    notifyListeners();
+  Future<Result<List<String>>> _loadTodos(void _) async {
+    try {
+      final list = await _repository.getTodos();
+      _todos = list;
+      return Ok(list);
+    } catch (e) {
+      return Error("Falha ao carregar");
+    } finally {
+      notifyListeners();
+    }
+  }
 
-    _todos = await _repository.getTodos();
-
-    _isLoading = false;
-    notifyListeners();
+  Future<Result<void>> _addTodo(String text) async {
+    try {
+      await _repository.addTodo(text);
+      return Ok(null);
+    } catch (e) {
+      return Error("Falha ao adicionar");
+    } finally {
+      notifyListeners();
+    }
   }
 }

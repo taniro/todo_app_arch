@@ -9,4 +9,8 @@ class TodoRepository {
     // Aqui poderíamos aplicar cache, parsing, filtragem, etc.
     return _service.fetchTodos();
   }
+
+  Future<void> addTodo(String todo) async {
+    return _service.addTodo(todo);
+  }
 }
