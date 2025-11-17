@@ -7,6 +7,12 @@ import 'result.dart';
 /// A = argument type (can be void, a single type, or a record)
 typedef CommandAction<T, A> = Future<Result<T>> Function(A args);
 
+
+/*
+O Command diz PARA a tela: "Ei, a ação que eu represento está em
+andamento/terminou/falhou, atualize os widgets que dependem de mim
+(botões, indicadores de progresso, etc.)!"
+ */
 class Command<T, A> extends ChangeNotifier {
   Command(this._action);
 

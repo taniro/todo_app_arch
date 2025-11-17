@@ -3,7 +3,9 @@ import 'package:todo_app_arch/data/repositories/TodoRepository.dart';
 import 'package:todo_app_arch/utils/command.dart';
 import 'package:todo_app_arch/utils/result.dart';
 
-
+/*
+O ViewModel diz PARA a tela: "Ei, os dados principais mudaram, atualize a lista!"
+ */
 class TodoViewModel extends ChangeNotifier {
   TodoViewModel(this._repository) {
     loadTodos = Command<List<String>, void>(_loadTodos)..executeNoArgs();
